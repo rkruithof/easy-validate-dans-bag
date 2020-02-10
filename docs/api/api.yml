@@ -1,0 +1,157 @@
+openapi: 3.0.1
+
+servers:
+  - url: http://localhost:20180/
+
+info:
+  description: Public interface for validating datasets in EASY.
+  version: 1.0.0
+  title: validate-dans-bag API
+  contact:
+    email: info@dans.knaw.nl
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+
+  /:
+    get:
+      tags:
+        - service
+      summary: Returns a description of the service.
+      responses:
+        200:
+          description: description of the service
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: a plain text, human readable description of the service
+                example: |
+                  EASY Deposit API Service running (v1.0.0)
+        500:
+          description: Service is unavailable because of an error.
+
+
+  /validate:
+    post:
+      tags:
+        - validation
+      summary: Sets a JSON web token cookie for authenticating subsequent calls to the service.
+      responses:
+        200:
+          $ref: "#/components/responses/Ok"
+        400:
+          $ref: "#/components/responses/MalformedArchive"
+        500:
+          $ref: "#/components/responses/InternalServerError"
+      parameters:
+        - name: PackageInfoType
+          in: query
+          description: Information type the bag should be validated as
+          required: false
+          schema:
+            type: string
+            enum: [SIP, AIP]
+            default: SIP
+        - name: uri
+          in: query
+          description: URI of the bag to be validated.
+          required: false
+          schema:
+            type: string
+            default: file:///
+        - name: bag-store
+          in: query
+          description: Bag-store to use as context for validation.
+          required: false
+          schema:
+            type: string
+
+
+#&uri=<bag-uri>[&bag-store=<bag-store-uri>]
+components:
+
+
+  responses:
+    Ok:
+      description: Ok. The bag is valid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/validateJsonOk"
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/validateTextOk"
+
+    InternalServerError:
+      description: Internal Server Error.
+
+    InvalidArchive:
+      description: Bad request. Archive file is not valid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/validateJsonNOk"
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/validateTextNOk"
+
+  schemas:
+    validateJsonOk:
+      type: object
+      example:
+        bagUri: file:///path/to/bag
+        bag: bag
+        infoPackageType: SIP
+        profile_version: 1
+        isCompliant: true
+      properties:
+        bag_uri:
+          type: string
+          format: uuid
+        bag:
+          type: string
+        profile_version:
+          type: integer
+        result:
+          type: string
+    validateTextOk:
+      type: string
+      example:
+        " Bag Uri: file:///path/to/bag\n
+        Information package type: SIP\n
+        Bag: bag\n
+        Profile version: 1\n
+        Is compliant: true"
+    validateJsonNOk:
+      type: object
+      example:
+        bagUri: file:///path/to/bag
+        bag: bag
+        infoPackageType: AIP
+        profile_version: 0
+        isCompliant: false
+        ruleViolations: [1.2.6(a) bag-info.txt must contain exactly one 'EASY-User-Account' element; number found 0, 4.2 Is-Version-Of value must be a URN]
+      properties:
+        bag_uri:
+          type: string
+          format: uuid
+        bag:
+          type: string
+        profile_version:
+          type: integer
+        result:
+          type: string
+    validateTextNOk:
+      type: string
+      example:
+        " Bag Uri: file:///path/to/bag\n
+        Information package type: AIP\n
+        Bag: bag\n
+        Profile version: 0\n
+        Is compliant: false\n
+        Rule Violations: \n
+        - [1.2.6(a)] bag-info.txt must contain exactly one 'EASY-User-Account' element; number found: 0\n
+        - [4.2] Is-Version-Of value must be a URN"
