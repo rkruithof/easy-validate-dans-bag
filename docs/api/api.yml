@@ -43,7 +43,7 @@ paths:
         200:
           $ref: "#/components/responses/Ok"
         400:
-          $ref: "#/components/responses/MalformedArchive"
+          $ref: "#/components/responses/InvalidArchive"
         500:
           $ref: "#/components/responses/InternalServerError"
       parameters:
