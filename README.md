@@ -8,4 +8,4 @@ Determines whether a DANS bag is valid according to the DANS BagIt Profile.
 Welcome
 -------
 
-Welcome to the `easy-deposit-api` project. See the [GitHub pages](https://dans-knaw.github.io/easy-deposit-api/) for the manual and API documentation.
+Welcome to the `easy-validate-dans-bag` project. See the [GitHub pages](https://dans-knaw.github.io/easy-validate-dans-bag/) for the manual and API documentation.
