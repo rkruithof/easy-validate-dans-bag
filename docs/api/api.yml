@@ -14,7 +14,6 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 paths:
-
   /:
     get:
       tags:
@@ -32,7 +31,6 @@ paths:
                   EASY Deposit API Service running (v1.0.0)
         500:
           description: Service is unavailable because of an error.
-
 
   /validate:
     post:
@@ -69,11 +67,7 @@ paths:
           schema:
             type: string
 
-
-#&uri=<bag-uri>[&bag-store=<bag-store-uri>]
 components:
-
-
   responses:
     Ok:
       description: Ok. A bag is validated.
@@ -90,7 +84,6 @@ components:
 
     InvalidArchive:
       description: Bad request. No bag can be found at the provided URL.
-
 
   schemas:
     validateJsonOk:
@@ -124,8 +117,6 @@ components:
                 type: string
               ruleText:
                 type: string
-
-
 
     validateTextOk:
       type: string
