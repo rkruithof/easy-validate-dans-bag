@@ -1,5 +1,5 @@
-easy-validate-dans-bag
-===========
+MANUAL
+======
 [![Build Status](https://travis-ci.org/DANS-KNAW/easy-validate-dans-bag.png?branch=master)](https://travis-ci.org/DANS-KNAW/easy-validate-dans-bag)
 
 Determines whether a DANS bag is valid according to the DANS BagIt Profile.
