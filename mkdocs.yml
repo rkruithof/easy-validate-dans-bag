@@ -14,13 +14,13 @@
 # limitations under the License.
 #
 
-site_name: easy-deposit-api
+site_name: easy-validate-dans-bag
 theme:
   name: dans
   disclaimer: false
 
-repo_name: DANS-KNAW/easy-deposit-api
-repo_url: https://github.com/DANS-KNAW/easy-deposit-api
+repo_name: DANS-KNAW/easy-validate-dans-bag
+repo_url: https://github.com/DANS-KNAW/easy-validate-dans-bag
 
 nav:
   - Manual: index.md
